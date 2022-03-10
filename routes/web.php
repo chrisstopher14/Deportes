@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\EventoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
+});
+
+Route::resource('evento', EventoController::class);
+
+Auth::routes();
+
+Route::get('/home', [EventoController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/', [EventoController::class, 'index'])->name('home');
 });

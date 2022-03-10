@@ -15,6 +15,10 @@ class EventoController extends Controller
     public function index()
     {
         //
+        $datosEvento['eventos']=Evento::paginate(5);
+
+        return view('eventos.indexEvento',$datosEvento);
+
     }
 
     /**
@@ -24,7 +28,7 @@ class EventoController extends Controller
      */
     public function create()
     {
-        //
+        return view('eventos.createEvento');
     }
 
     /**
@@ -35,7 +39,15 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$datosEvento = request()->all();
+        $datosEvento = request()->except('_token');
+
+        //return response()->json($datosEvento);
+        Evento::insert($datosEvento);
+
+        return redirect('evento')->with('mensaje', '¡Evento registrado exitosamente!');
+
+
     }
 
     /**
@@ -55,9 +67,13 @@ class EventoController extends Controller
      * @param  \App\Models\Evento  $evento
      * @return \Illuminate\Http\Response
      */
-    public function edit(Evento $evento)
+    public function edit($id)
     {
         //
+        $evento=Evento::findOrFail($id);
+
+
+        return view('eventos.editEvento', compact('evento'));
     }
 
     /**
@@ -67,9 +83,14 @@ class EventoController extends Controller
      * @param  \App\Models\Evento  $evento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Evento $evento)
+    public function update(Request $request, $id)
     {
         //
+        $datosEvento = request()->except(['_token', '_method']);
+        Evento::where('id','=',$id)->update($datosEvento);
+
+        $evento=Evento::findOrFail($id);
+        return view('eventos.editEvento', compact('evento'));
     }
 
     /**
@@ -78,8 +99,10 @@ class EventoController extends Controller
      * @param  \App\Models\Evento  $evento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Evento $evento)
+    public function destroy($id)
     {
         //
+        Evento::destroy($id);
+        return redirect('evento')->with('mensaje', 'Evento borrado exitosamente!');
     }
 }
