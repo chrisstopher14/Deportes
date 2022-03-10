@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::resource('evento', EventoController::class);
+Route::resource('evento', EventoController::class)->middleware('auth');
 
 Auth::routes();
 
