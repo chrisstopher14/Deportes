@@ -35,9 +35,21 @@
     <input type="text" class="form-control" name="participantesEvento"
     value="{{ isset($evento->participantesEvento)?$evento->participantesEvento:old('participantesEvento') }}" id="participantesEvento" >
 
+
     <label for="deporte_id">Tipo de deporte</label>
-    <input type="number" class="form-control" name="deporte_id"
-    value="{{ isset($evento->deporte_id)?$evento->deporte_id:old('deporte_id') }}" id="deporte_id" >
+    <select name="deporte_id" id="deporte_id" class="form-control"
+    value="{{ isset($evento->deporte_id)?$evento->deporte_id:old('deporte_id') }}">
+
+    <option >Seleccionar...</option>
+    @foreach ($deportes as $key => $value)
+
+    <option value="{{ $key }}">{{$value }}</option>
+
+    @endforeach
+
+
+    </select>
+
 <br><br>
 
     <a href=""  class="btn btn-success" >

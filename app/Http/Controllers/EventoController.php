@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evento;
+use App\Models\Deporte;
 use Illuminate\Http\Request;
 
 class EventoController extends Controller
@@ -28,7 +29,11 @@ class EventoController extends Controller
      */
     public function create()
     {
-        return view('eventos.createEvento');
+        $evento = new Evento();
+        $deportes = Deporte::pluck('nombreDeporte', 'id_deporte');
+        $deportes->all();
+
+        return view('eventos.createEvento', compact('evento','deportes'));
     }
 
     /**
