@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::resource('evento', EventoController::class)->middleware('auth');
 
-Auth::routes();
+Auth::routes(['register'=>false, 'reset'=>false]);
 
 Route::get('/home', [EventoController::class, 'index'])->name('home');
 

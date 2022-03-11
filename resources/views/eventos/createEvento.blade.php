@@ -5,7 +5,7 @@
 
         <form action="{{ url('/evento') }}" method="POST">
         @csrf
-        @include('eventos.formEvento',['accion'=>'Registrar']);
+        @include('eventos.formEvento',['accion'=>'Registrar'])
 
         </form>
     </div>

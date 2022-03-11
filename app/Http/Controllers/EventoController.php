@@ -15,7 +15,7 @@ class EventoController extends Controller
     public function index()
     {
         //
-        $datosEvento['eventos']=Evento::paginate(5);
+        $datosEvento['eventos']=Evento::paginate(3);
 
         return view('eventos.indexEvento',$datosEvento);
 
@@ -39,6 +39,25 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validacionCampos=[
+            'nombreEvento'=>'required|string|max:100',
+            'fechaEvento'=>'required|string|max:100',
+            'ubicacionEvento'=>'required|string|max:100',
+            'participantesEvento'=>'required|max:50',
+            'deporte_id'=>'required',
+        ];
+        $mensaje=[
+            'nombreEvento.required'=>'El nombre del evento es requerido.',
+            'fechaEvento.required'=>'La fecha del evento es requerida.',
+            'ubicacionEvento.required'=>'La ubicacion del evento es requerida.',
+            'participantesEvento.required'=>'El número de participantes es requerido.',
+            'deporte_id.required'=>'El tipo de deporte es requerido.'
+
+        ];
+
+        $this->validate($request, $validacionCampos,$mensaje);
+
         //$datosEvento = request()->all();
         $datosEvento = request()->except('_token');
 
@@ -86,11 +105,31 @@ class EventoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validacionCampos=[
+            'nombreEvento'=>'required|string|max:100',
+            'fechaEvento'=>'required|string|max:100',
+            'ubicacionEvento'=>'required|string|max:100',
+            'participantesEvento'=>'required|max:50',
+            'deporte_id'=>'required',
+        ];
+        $mensaje=[
+            'nombreEvento.required'=>'El nombre del evento es requerido.',
+            'fechaEvento.required'=>'La fecha del evento es requerida.',
+            'ubicacionEvento.required'=>'La ubicacion del evento es requerida.',
+            'participantesEvento.required'=>'El número de participantes es requerido.',
+            'deporte_id.required'=>'El tipo de deporte es requerido.'
+
+        ];
+
+        $this->validate($request, $validacionCampos,$mensaje);
+
+
         $datosEvento = request()->except(['_token', '_method']);
         Evento::where('id','=',$id)->update($datosEvento);
 
         $evento=Evento::findOrFail($id);
-        return view('eventos.editEvento', compact('evento'));
+        //return view('eventos.editEvento', compact('evento'));
+        return redirect('evento')->with('mensaje', 'Evento editado exitosamente!');
     }
 
     /**
