@@ -16,9 +16,12 @@ class EventoController extends Controller
     public function index()
     {
         //
+        $evento = new Evento();
+        $deportes = Deporte::pluck('nombreDeporte', 'id_deporte');
+
         $datosEvento['eventos']=Evento::paginate(3);
 
-        return view('eventos.indexEvento',$datosEvento);
+        return view('eventos.indexEvento',$datosEvento, compact('deportes'));
 
     }
 
@@ -94,10 +97,13 @@ class EventoController extends Controller
     public function edit($id)
     {
         //
+        $evento = new Evento();
+        $deportes = Deporte::pluck('nombreDeporte', 'id_deporte');
+        $deportes->all();
         $evento=Evento::findOrFail($id);
 
 
-        return view('eventos.editEvento', compact('evento'));
+        return view('eventos.editEvento', compact('evento','deportes'));
     }
 
     /**

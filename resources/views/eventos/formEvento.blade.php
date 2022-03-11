@@ -40,7 +40,7 @@
     <select name="deporte_id" id="deporte_id" class="form-control"
     value="{{ isset($evento->deporte_id)?$evento->deporte_id:old('deporte_id') }}">
 
-    <option >Seleccionar...</option>
+    <option value="0">Seleccionar...</option>
     @foreach ($deportes as $key => $value)
 
     <option value="{{ $key }}">{{$value }}</option>

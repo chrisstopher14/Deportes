@@ -42,7 +42,14 @@
         @foreach ($eventos as $evento)
         <tr>
             <td>{{ $evento->id }}</td>
-            <td>{{ $evento->deporte_id }}</td>
+            <td>
+        @foreach ($deportes as $key=>$value)
+
+        {{ $value }}
+
+        @endforeach
+    </td>
+
             <td>{{ $evento->nombreEvento }}</td>
             <td>{{ $evento->fechaEvento }}</td>
             <td>{{ $evento->ubicacionEvento }}</td>
